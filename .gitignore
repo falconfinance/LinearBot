@@ -47,3 +47,6 @@ sessions/
 
 # Bot lock file
 .bot.lock
+
+# App configuration with secrets
+app.yaml
