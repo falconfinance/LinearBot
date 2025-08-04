@@ -28,10 +28,7 @@ module.exports = {
     wait_ready: true,
     
     // Monitoring
-    instance_var: 'INSTANCE_ID',
-    
-    // Pre-start hook to ensure build
-    pre_start: 'npm run build'
+    instance_var: 'INSTANCE_ID'
   }, {
     name: 'linear-bot-daily-reset',
     script: './dist/utils/dailyReset.js',

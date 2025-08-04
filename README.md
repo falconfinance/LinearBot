@@ -24,7 +24,7 @@ A Telegram bot that streamlines the process of creating Linear tickets for the F
 
 1. **Clone the repository**
 ```bash
-git clone [repository-url]
+git clone https://github.com/falconfinance/LinearBot.git
 cd LinearBot
 ```
 
@@ -66,20 +66,75 @@ npm run build
 npm start
 ```
 
-### Using PM2 (Recommended)
+### Using PM2 (Recommended for Production)
 ```bash
 # Install PM2 globally
 npm install -g pm2
 
 # Start the bot
-pm2 start ecosystem.config.js
+pm2 start ecosystem.config.js --env production
 
 # View logs
 pm2 logs linear-bot
 
 # Monitor
 pm2 monit
+
+# Save PM2 configuration
+pm2 save
+
+# Set up PM2 to start on boot (Linux/Mac)
+pm2 startup
 ```
+
+## Deployment
+
+### Generic Server Deployment
+
+1. **Prepare your server**
+   - Ensure Node.js 16+ is installed
+   - Install PM2 globally: `npm install -g pm2`
+   - Create application directory
+
+2. **Deploy the application**
+   ```bash
+   # Clone repository
+   git clone https://github.com/falconfinance/LinearBot.git
+   cd LinearBot
+   
+   # Install dependencies
+   npm install
+   
+   # Build application
+   npm run build
+   
+   # Create directories
+   mkdir -p data logs
+   ```
+
+3. **Set up environment variables**
+   - Create `.env` file with all required variables
+   - Ensure proper file permissions: `chmod 600 .env`
+
+4. **Start with PM2**
+   ```bash
+   pm2 start ecosystem.config.js --env production
+   pm2 save
+   ```
+
+### Environment Variables
+
+The bot requires the following environment variables to be set:
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `TELEGRAM_BOT_TOKEN` | Telegram bot token from @BotFather | Yes |
+| `LINEAR_API_KEY` | Linear API key | Yes |
+| `LINEAR_TEAM_ID` | Linear team ID | Yes |
+| `LINEAR_PROJECT_ID` | Linear project ID for tickets | Yes |
+| `LINEAR_REGINA_USER_ID` | User ID for auto-assignment | Yes |
+| `DATABASE_PATH` | Path to SQLite database | No (default: ./data/bot.db) |
+| `NODE_ENV` | Environment (development/production) | No (default: development) |
 
 ## Usage
 
@@ -124,6 +179,7 @@ LinearBot/
 - `npm test` - Run tests
 - `npm run lint` - Check code style
 - `npm run format` - Format code
+- `npm run get-linear-ids` - Utility to fetch Linear team/project IDs
 
 ## Troubleshooting
 
@@ -147,6 +203,11 @@ LinearBot/
 - Keep API keys secure
 - Regularly update dependencies
 - Use proper file permissions for database
+- Consider using environment variable management tools in production
+
+## Daily Reset
+
+The bot includes a daily reset cron job that runs at midnight to clean up old sessions and reset daily ticket limits. This is automatically configured in the PM2 ecosystem file.
 
 ## Support
 
