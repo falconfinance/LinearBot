@@ -12,7 +12,8 @@
     "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier --write \"src/**/*.ts\"",
     "typecheck": "tsc --noEmit",
-    "get-linear-ids": "ts-node src/utils/getLinearIds.ts"
+    "get-linear-ids": "ts-node src/utils/getLinearIds.ts",
+    "reset-daily-limits": "ts-node src/utils/dailyReset.ts"
   },
   "keywords": [],
   "author": "",
