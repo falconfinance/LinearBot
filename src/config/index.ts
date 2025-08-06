@@ -29,10 +29,11 @@ export const config = {
   session: {
     timeoutMinutes: parseInt(process.env.SESSION_TIMEOUT_MINUTES || '30', 10),
   },
-  rateLimit: {
-    maxTicketsPerDay: parseInt(process.env.MAX_TICKETS_PER_DAY || '5', 10),
-    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '86400000', 10),
-  },
+  // Rate limiting removed
+  // rateLimit: {
+  //   maxTicketsPerDay: parseInt(process.env.MAX_TICKETS_PER_DAY || '5', 10),
+  //   windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '86400000', 10),
+  // },
   bot: {
     name: process.env.BOT_NAME || 'Falcon Linear Ticket Bot',
   },

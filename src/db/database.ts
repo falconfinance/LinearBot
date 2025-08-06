@@ -184,11 +184,12 @@ export class Database {
     await this.run(sql);
   }
 
-  async getUserTicketsToday(telegramUserId: string): Promise<number> {
-    const sql = 'SELECT tickets_created_today FROM users WHERE telegram_user_id = ?';
-    const row = await this.get(sql, [telegramUserId]);
-    return row ? row.tickets_created_today : 0;
-  }
+  // Rate limiting removed - no longer needed
+  // async getUserTicketsToday(telegramUserId: string): Promise<number> {
+  //   const sql = 'SELECT tickets_created_today FROM users WHERE telegram_user_id = ?';
+  //   const row = await this.get(sql, [telegramUserId]);
+  //   return row ? row.tickets_created_today : 0;
+  // }
 
   // Ticket methods
   async createTicket(ticket: Omit<TicketRequest, 'id' | 'created_at'>): Promise<TicketRequest> {

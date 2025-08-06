@@ -4,7 +4,6 @@ import { SessionManager } from '../sessionManager';
 import { LinearService } from '../../api/linearService';
 import { logger as Logger } from '../../utils/logger';
 import { SessionState, TicketLabel, TicketPriority, TicketStatus, LinearIssue } from '../../types';
-import { config } from '../../config';
 import { 
   getMainMenuKeyboard,
   getLabelKeyboard, 
@@ -151,17 +150,6 @@ export class CallbackHandler {
   private async handleAction(chatId: number, messageId: number, userId: string, action: string): Promise<void> {
     switch (action) {
       case 'create_ticket':
-        // Check rate limit
-        const ticketsToday = await this.db.getUserTicketsToday(userId);
-        if (ticketsToday >= config.rateLimit.maxTicketsPerDay) {
-          await this.bot.editMessageText(
-            `❌ You've reached your daily limit of ${config.rateLimit.maxTicketsPerDay} tickets.\n\n` +
-            'Please try again tomorrow or contact Regina directly for urgent requests.',
-            { chat_id: chatId, message_id: messageId }
-          );
-          return;
-        }
-
         // Start ticket creation flow with category selection
         await this.sessionManager.updateSessionState(userId, SessionState.AWAITING_CATEGORY);
         await this.bot.editMessageText(
